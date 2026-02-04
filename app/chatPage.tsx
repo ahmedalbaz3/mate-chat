@@ -1,15 +1,14 @@
-import Image from "next/image";
-import ChatInterface from "./newChat";
-import ChatPage from "./chatPage";
+"use client";
 
-export default function Home() {
+import ChatInterface from "./newChat";
+
+export default function ChatPage() {
   return (
-    <div className="">
-      {/* <ChatPage /> */}
+    <div className="h-screen">
       <ChatInterface
         initialChatId=""
         token="test-token"
-        backendUrl="https://jb8tw1fp-5555.euw.devtunnels.ms/graphql"
+        backendUrl=""
         botName="AI Assistant"
         placeholder="Type your message..."
       />
