@@ -1,18 +1,23 @@
-import Image from "next/image";
-import ChatInterface from "./newChat";
-import ChatPage from "./chatPage";
+import Aside from "@/components/ui/Aside";
+import ChatInterface from "../components/ui/Chat";
+import Header from "@/components/layout/Header";
 
 export default function Home() {
   return (
-    <div className="">
-      {/* <ChatPage /> */}
-      <ChatInterface
-        initialChatId=""
-        token="test-token"
-        backendUrl="https://jb8tw1fp-5555.euw.devtunnels.ms/graphql"
-        botName="AI Assistant"
-        placeholder="Type your message..."
-      />
+    <div className="flex">
+      <Aside />
+      <div className="flex-6 flex flex-col">
+        <Header />
+        <div className="h-screen flex w-full">
+          <ChatInterface
+            initialChatId=""
+            token="test-token"
+            backendUrl=""
+            botName="AI Assistant"
+            placeholder="Type your message..."
+          />
+        </div>
+      </div>
     </div>
   );
 }

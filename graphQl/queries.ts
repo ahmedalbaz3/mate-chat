@@ -34,8 +34,8 @@ export const GET_MATE_MESSAGES = gql`
 `;
 
 export const SEARCH_MATE_MESSAGES = gql`
-  query Search_mate_messages {
-    search_mate_messages(query: null, limit: null) {
+  query Search_mate_messages($query: String!, $limit: Int) {
+    search_mate_messages(query: $query, limit: $limit) {
       id
       role
       content

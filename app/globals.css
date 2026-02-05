@@ -2,7 +2,10 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+  --foreground: #0f172a;
+  --accent: #4f46e5;
+  --radius: 0.75rem;
 }
 
 @theme inline {
@@ -10,17 +13,153 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-accent: var(--accent);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  /* --- 1. Global Overflow & Text Safety --- */
+  /* This handles the "ThisIsAVeryLongString..." edge case from your test */
+  p,
+  li,
+  blockquote,
+  span {
+    @apply break-words;
+    overflow-wrap: anywhere;
+  }
+
+  /* --- 2. Typography & Headings --- */
+  h1 {
+    @apply text-4xl font-extrabold tracking-tight text-slate-900 mt-10 mb-6 flex items-center gap-2;
+  }
+  h2 {
+    @apply text-2xl font-bold tracking-tight text-slate-800 mt-10 mb-4 border-b border-slate-100 pb-2;
+  }
+  h3 {
+    @apply text-xl font-semibold tracking-tight text-slate-800 mt-8 mb-3;
+  }
+
+  p {
+    @apply text-base leading-7 text-slate-600 mb-5 last:mb-0;
+  }
+
+  /* --- 3. Lists & Task Lists --- */
+  ul {
+    @apply list-disc list-outside ml-6 mb-5 space-y-2 text-slate-600;
+  }
+  ol {
+    @apply list-decimal list-outside ml-6 mb-5 space-y-2 text-slate-600;
+  }
+  li > ul,
+  li > ol {
+    @apply mt-2 mb-0 ml-4;
+  }
+
+  /* Support for [x] Task Lists */
+  li input[type="checkbox"] {
+    @apply mr-2 accent-indigo-500 transform scale-110;
+  }
+
+  /* --- 4. Code Blocks (Optimized for Rust/TS) --- */
+  pre {
+    @apply my-6 overflow-x-auto rounded-xl border border-slate-200 bg-[#1e1e1e] p-5 
+           font-mono text-sm leading-relaxed shadow-lg relative;
+  }
+
+  /* Inline code snippet formatting */
+  code:not(pre code) {
+    @apply rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.9em] 
+           font-semibold text-indigo-600;
+  }
+
+  pre code {
+    @apply block w-full p-0 bg-transparent text-slate-300 font-normal whitespace-pre;
+  }
+
+  /* --- 5. LaTeX & Math Rendering --- */
+  /* Centers math blocks and ensures they don't break page width */
+  .math-display,
+  .math-inline {
+    @apply font-serif; /* Helps math look more natural */
+  }
+
+  .break-all-words {
+    word-break: break-all !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* --- 6. Alerts & Blockquotes (GitHub Style) --- */
+  blockquote {
+    @apply my-6 border-l-4 border-slate-200 bg-slate-50/50 py-3 pl-6 pr-4 rounded-r-xl;
+  }
+
+  /* Target [!INFO] style alerts specifically */
+  /* blockquote:has(strong:first-child:contains("INFO")) {
+    @apply border-blue-500 bg-blue-50/30;
+  } */
+
+  /* Nested Quotes logic */
+  blockquote blockquote {
+    @apply mt-4 mb-2 border-l-slate-300 bg-slate-100/50;
+  }
+
+  /* --- 7. HTML Entities & Keyboard Tags --- */
+  kbd {
+    @apply px-1.5 py-0.5 text-[0.75rem] font-sans font-semibold 
+           bg-slate-100 border border-slate-300 rounded shadow-sm;
+  }
+
+  /* --- 8. Tables (The URL Wrap Test) --- */
+  .table-wrapper {
+    @apply my-6 overflow-x-auto rounded-xl border border-slate-200 shadow-sm;
+  }
+
+  table {
+    @apply w-full border-collapse text-left text-sm text-slate-600;
+  }
+  th {
+    @apply px-4 py-3 bg-slate-50 font-semibold text-slate-900 border-b border-slate-200;
+  }
+  td {
+    @apply px-4 py-3 border-b border-slate-100 align-top;
+  }
+
+  /* Ensure links inside tables wrap correctly */
+  td a {
+    @apply text-indigo-600 hover:underline break-all;
+  }
+
+  /* --- 9. Miscellaneous --- */
+  hr {
+    @apply my-10 border-slate-200;
+  }
+  img {
+    @apply rounded-lg shadow-sm max-w-full h-auto my-6;
+  }
+}
+
+/* --- Syntax Tokens --- */
+.token.keyword {
+  @apply text-[#cc7ad9];
+} /* pub, struct, fn */
+.token.function {
+  @apply text-[#4fc1ff];
+} /* main, println */
+.token.string {
+  @apply text-[#ce9178];
+} /* "React" */
+.token.comment {
+  @apply text-[#6a9955] italic;
+}
+.token.class-name {
+  @apply text-[#4ec9b0];
+} /* Result, Framework */
+.token.operator {
+  @apply text-slate-400;
 }

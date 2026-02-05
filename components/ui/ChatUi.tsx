@@ -19,7 +19,7 @@ interface ChatInterfaceProps {
 }
 
 export default function ChatInterface({
-  backendUrl = "http://localhost:3000",
+  backendUrl = "",
   botName = "AI Assistant",
   placeholder = "Type your message...",
   initialMessages = [],

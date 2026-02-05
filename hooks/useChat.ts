@@ -29,7 +29,73 @@ const useChat = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [streamingContent, setStreamingContent] = useState("");
+  const [streamingContent, setStreamingContent] = useState(
+    `# 🛡️ Advanced UI Stress Test
+
+Testing the limits of the Markdown renderer with complex nested structures and edge cases.
+
+---
+
+### 1. Nested Elements & Task Lists
+*   **Formatting Stress:** *Italic inside **Bold which is ~~Strikethrough~~***.
+*   **Deep Nesting:**
+    1. Level One
+        * Level Two (Unordered)
+            1. Level Three (Ordered)
+            2. [ ] Unfinished Task
+            3. [x] Completed Task with an \`inline_code\` snippet
+    2. Back to Level One
+
+### 2. Complex Tables & Alignment
+| Service ID | Status | Performance Metrics | Documentation |
+| :--- | :---: | :--- | :--- |
+| **USR-99** | ✅ | \`CPU: 12%\` | [View Specs](https://example.com/very-long-url-to-test-text-wrapping-behavior-on-small-screens) |
+| **DB-CORE** | ⚠️ | <span style="color:red">Latent</span> | [Wiki](https://example.com) |
+| **CDN-01** | 🚀 | \`99.9% Uptime\` | N/A |
+
+> [!INFO]
+> **Nested Blockquotes:**
+> > This is a sub-quote. It should be indented further.
+> > * "Logic will get you from A to B. Imagination will take you everywhere."
+
+### 3. Syntax Highlighting (Multi-language)
+Testing a **Rust** snippet for complex syntax highlighting:
+
+\`\`\`rust
+#[derive(Debug)]
+pub struct Framework<T> {
+    pub name: String,
+    pub metadata: T,
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let ui = Framework { name: "React".into(), metadata: 2024 };
+    println!("Testing: {:?}", ui);
+    Ok(())
+}
+\`\`\`
+
+### 4. Advanced LaTeX (Scientific Rendering)
+Testing multi-line alignment and matrix notation:
+
+$$
+\begin{aligned}
+  \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} & = \frac{4\pi}{c}\vec{\mathbf{j}} \\
+  \nabla \cdot \vec{\mathbf{E}} & = 4\pi\rho
+\end{aligned}
+$$
+
+And inline math: $ \sqrt{a^2 + b^2} = c $ for the hypotenuse.
+
+### 5. Media & HTML Entities
+*   **Image Handling:** ![Alt Text](https://via.placeholder.com/150)
+*   **HTML Tags:** Use <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.
+*   **Entities:** &trade; &copy; &reg; &#128512;
+*   **Long String (Overflow Test):** ThisIsAVeryLongStringWithoutSpacesToTestIfTheContainerWillBreakOrScrollOverflowHorizontallyInTheFinalRenderedOutput.
+
+---
+**Final Status:** Rendering complete. 🏁`,
+  );
 
   // --- Refs ---
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -101,7 +167,7 @@ const useChat = ({
       }
       console.log(response);
       const reader = response.body.getReader();
-      const decoder = new TextDecoder();
+      const decoder = new TextDecoder(); // to turn the code (numbers) into letters
       let buffer = ""; // Buffer for incomplete chunks
 
       while (true) {
@@ -130,7 +196,14 @@ const useChat = ({
               }
 
               if (parsed.type === "complete") {
-                // Stream completed successfully
+                if (parsed.text) {
+                  streamingContentRef.current += parsed.text;
+                  console.log("Final chunk:", parsed.text);
+                }
+
+                const finalValue = streamingContentRef.current;
+                setStreamingContent(finalValue);
+
                 reader.cancel();
                 break;
               }
@@ -140,6 +213,7 @@ const useChat = ({
               }
             } catch (parseError) {
               console.warn("Failed to parse SSE line:", line, parseError);
+            } finally {
             }
           }
         }
