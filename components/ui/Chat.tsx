@@ -13,7 +13,6 @@ interface ChatInterfaceProps {
   initialChatId?: string;
   token: string;
   backendUrl?: string; // Add base URL prop
-  botName?: string;
   placeholder?: string;
 }
 
@@ -21,7 +20,6 @@ export default function ChatInterface({
   initialChatId,
   token,
   backendUrl,
-  botName = "AI Assistant",
   placeholder = "Type your message...",
 }: ChatInterfaceProps) {
   const {
@@ -55,7 +53,7 @@ export default function ChatInterface({
                 Start a conversation
               </h2>
               <p className="text-slate-500 max-w-md">
-                Ask me anything! I'm here to help.
+                Ask me anything! I&apos;m here to help.
               </p>
             </div>
           ) : (
@@ -84,18 +82,18 @@ export default function ChatInterface({
                     }`}
                   >
                     <div
-                      className={`rounded-2xl px-4 py-3 ${
+                      className={`max-w-full rounded-2xl px-4 py-3 ${
                         message.role === "user"
-                          ? "bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-md"
-                          : "bg-white text-slate-800 shadow-sm border border-slate-200"
+                          ? "bg-gradient-to-br from-blue-600 to-teal-600 text-white shadow-md user-message"
+                          : "bg-white text-slate-800 shadow-sm border border-slate-200 mate-message"
                       }`}
                     >
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      <div className="text-sm leading-relaxed whitespace-pre-wrap">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {message.content}
                         </ReactMarkdown>
                         {/* {message.content} */}
-                      </p>
+                      </div>
                     </div>
                     <span className="text-xs text-slate-400 mt-1 px-1">
                       {message.timestamp.toLocaleTimeString([], {
@@ -180,7 +178,6 @@ export default function ChatInterface({
             ) : (
               <button
                 onClick={handleSend}
-                hidden={!input.trim()}
                 className="flex-shrink-0 p-2 mb-1.5 h-fit rounded-full bg-gradient-to-br from-blue-400 to-blue-700 text-white flex items-center justify-center hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:-rotate-45 duration-250"
                 aria-label="Send message"
               >

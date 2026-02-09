@@ -11,9 +11,8 @@ export default function Home() {
         <div className="h-screen flex w-full">
           <ChatInterface
             initialChatId=""
-            token="test-token"
+            token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI3NmIwOWVmNS1mNjdlLTQ3NmYtYTQzMy05NDg1ODE0OGZlNDIiLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzcwNDc3Mzg4LCJleHAiOjE3NzA1NDIxODd9.NAkak1U5vk60oXq3YEGNKTU_EjvZcOl5r1jHhYz1Ftw"
             backendUrl=""
-            botName="AI Assistant"
             placeholder="Type your message..."
           />
         </div>

@@ -29,73 +29,7 @@ const useChat = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [streamingContent, setStreamingContent] = useState(
-    `# 🛡️ Advanced UI Stress Test
-
-Testing the limits of the Markdown renderer with complex nested structures and edge cases.
-
----
-
-### 1. Nested Elements & Task Lists
-*   **Formatting Stress:** *Italic inside **Bold which is ~~Strikethrough~~***.
-*   **Deep Nesting:**
-    1. Level One
-        * Level Two (Unordered)
-            1. Level Three (Ordered)
-            2. [ ] Unfinished Task
-            3. [x] Completed Task with an \`inline_code\` snippet
-    2. Back to Level One
-
-### 2. Complex Tables & Alignment
-| Service ID | Status | Performance Metrics | Documentation |
-| :--- | :---: | :--- | :--- |
-| **USR-99** | ✅ | \`CPU: 12%\` | [View Specs](https://example.com/very-long-url-to-test-text-wrapping-behavior-on-small-screens) |
-| **DB-CORE** | ⚠️ | <span style="color:red">Latent</span> | [Wiki](https://example.com) |
-| **CDN-01** | 🚀 | \`99.9% Uptime\` | N/A |
-
-> [!INFO]
-> **Nested Blockquotes:**
-> > This is a sub-quote. It should be indented further.
-> > * "Logic will get you from A to B. Imagination will take you everywhere."
-
-### 3. Syntax Highlighting (Multi-language)
-Testing a **Rust** snippet for complex syntax highlighting:
-
-\`\`\`rust
-#[derive(Debug)]
-pub struct Framework<T> {
-    pub name: String,
-    pub metadata: T,
-}
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let ui = Framework { name: "React".into(), metadata: 2024 };
-    println!("Testing: {:?}", ui);
-    Ok(())
-}
-\`\`\`
-
-### 4. Advanced LaTeX (Scientific Rendering)
-Testing multi-line alignment and matrix notation:
-
-$$
-\begin{aligned}
-  \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} & = \frac{4\pi}{c}\vec{\mathbf{j}} \\
-  \nabla \cdot \vec{\mathbf{E}} & = 4\pi\rho
-\end{aligned}
-$$
-
-And inline math: $ \sqrt{a^2 + b^2} = c $ for the hypotenuse.
-
-### 5. Media & HTML Entities
-*   **Image Handling:** ![Alt Text](https://via.placeholder.com/150)
-*   **HTML Tags:** Use <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.
-*   **Entities:** &trade; &copy; &reg; &#128512;
-*   **Long String (Overflow Test):** ThisIsAVeryLongStringWithoutSpacesToTestIfTheContainerWillBreakOrScrollOverflowHorizontallyInTheFinalRenderedOutput.
-
----
-**Final Status:** Rendering complete. 🏁`,
-  );
+  const [streamingContent, setStreamingContent] = useState("");
 
   // --- Refs ---
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -152,7 +86,7 @@ And inline math: $ \sqrt{a^2 + b^2} = c $ for the hypotenuse.
       const response = await fetch(url, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${process.env.TOKEN || ""}`,
           Accept: "text/event-stream",
         },
         signal: controller.signal,
@@ -262,6 +196,7 @@ And inline math: $ \sqrt{a^2 + b^2} = c $ for the hypotenuse.
     if (!input.trim() || isLoading) return;
 
     const userPrompt = input.trim();
+    console.log("User prompt:", userPrompt);
     const userMsg: Message = {
       id: Date.now().toString(),
       role: "user",
@@ -284,7 +219,7 @@ And inline math: $ \sqrt{a^2 + b^2} = c $ for the hypotenuse.
             },
             context: {
               headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiJjNmU4MzhjYy1jZDgxLTRmYzQtODhlNy0wYTZiYzA5ZmU3ZGEiLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzcwMjA3OTg3LCJleHAiOjE3NzAyNzI3ODZ9.RWjmSWItFN6E7KVMcLX3Smg7nXtt3qyDcbPyErNoECA`,
+                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiI3NmIwOWVmNS1mNjdlLTQ3NmYtYTQzMy05NDg1ODE0OGZlNDIiLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzcwNDc3Mzg4LCJleHAiOjE3NzA1NDIxODd9.NAkak1U5vk60oXq3YEGNKTU_EjvZcOl5r1jHhYz1Ftw`,
               },
             },
           },

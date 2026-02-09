@@ -46,7 +46,10 @@ body {
   }
 
   p {
-    @apply text-base leading-7 text-slate-600 mb-5 last:mb-0;
+    @apply text-base leading-7 text-white mb-5 last:mb-0;
+  }
+  .mate-message p {
+    @apply text-slate-700!;
   }
 
   /* --- 3. Lists & Task Lists --- */

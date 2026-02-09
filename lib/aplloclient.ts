@@ -6,7 +6,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client-integration-nextjs";
 
 export default function makeClient() {
   const httpLink = new HttpLink({
-    uri: "https://jb8tw1fp-5555.euw.devtunnels.ms/graphql",
+    uri: process.env.BACKEND_API_KEY || "http://localhost:4000/graphql",
     fetchOptions: {
       // you can keep your fetch options here if needed
     },
@@ -23,7 +23,7 @@ export default function makeClient() {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uSWQiOiJjNmU4MzhjYy1jZDgxLTRmYzQtODhlNy0wYTZiYzA5ZmU3ZGEiLCJ0eXBlIjoiQUNDRVNTX1RPS0VOIiwiaWF0IjoxNzcwMjA3OTg3LCJleHAiOjE3NzAyNzI3ODZ9.RWjmSWItFN6E7KVMcLX3Smg7nXtt3qyDcbPyErNoECA`,
+        authorization: `Bearer ${process.env.TOKEN || ""}`,
       },
     };
   });

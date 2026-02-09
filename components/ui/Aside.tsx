@@ -15,9 +15,9 @@ const chats = [
 
 const Aside = () => {
   return (
-    <div className="h-screen flex-1 bg-gray-800 flex flex-col p-6 gap-8 text-white">
+    <div className="h-screen flex-1 bg-gray-800 flex flex-col p-2 gap-8 text-white">
       <>
-        <div className="header w-full flex items-center justify-between px-2">
+        <div className="header w-full flex items-center justify-between ">
           <div className="p-2 hover:bg-blue-900/90 rounded-full cursor-pointer">
             <Menu className="w-5 h-5 text-white " />
           </div>
